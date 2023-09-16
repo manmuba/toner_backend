@@ -16,10 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from category.views import CategoryListCreateDetailView, CategoryDetailView
+from products.views import ProductListCreateRetrieveView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),  # Include DJOSER URLs
     path('auth/', include('djoser.urls.authtoken')),
     path('api/', include('rest_framework.urls')),
+    path('categories/', CategoryListCreateDetailView.as_view(), name='category-list-create'),
+    path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-retrieve-update-delete'),
+    path('products/', ProductListCreateRetrieveView.as_view(), name='product-list-create'),
+    path('products/<int:pk>/', ProductListCreateRetrieveView.as_view(), name='product-retrieve'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
