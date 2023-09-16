@@ -79,6 +79,8 @@ TEMPLATES = [
     },
 ]
 
+from datetime import timedelta
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -86,7 +88,16 @@ REST_FRAMEWORK = {
     ),
 }
 
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
+
 DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True, 
     'SERIALIZERS': {
         'user_create': 'authentication.serializers.CustomUserSerializer',
         'user': 'authentication.serializers.CustomUserSerializer',
