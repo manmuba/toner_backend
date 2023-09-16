@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Product
 from .serializers import ProductSerializer
 from .filters import ProductFilter
+from category.views import IsAdminOrReadOnly
 
 class ProductListCreateRetrieveView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
@@ -12,9 +13,10 @@ class ProductListCreateRetrieveView(generics.ListCreateAPIView):
     ordering_fields = ['name', 'price', 'created_at']  # Fields to sort by
     ordering = ['-created_at']  # Default ordering
     pagination_class = pagination.PageNumberPagination  # Use PageNumberPagination
+    permission_classes = [IsAdminOrReadOnly]
 
-    def get(self, request, *args, **kwargs):
-        # Check if a detail view is requested (e.g., /products/<pk>/)
-        if 'pk' in kwargs:
-            return self.retrieve(request, *args, **kwargs)
-        return super().list(request, *args, **kwargs)
+    
+class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAdminOrReadOnly]

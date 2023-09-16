@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from category.views import CategoryListCreateDetailView, CategoryDetailView
-from products.views import ProductListCreateRetrieveView
+from products.views import ProductListCreateRetrieveView, ProductDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +29,7 @@ urlpatterns = [
     path('categories/', CategoryListCreateDetailView.as_view(), name='category-list-create'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-retrieve-update-delete'),
     path('products/', ProductListCreateRetrieveView.as_view(), name='product-list-create'),
-    path('products/<int:pk>/', ProductListCreateRetrieveView.as_view(), name='product-retrieve'),
+    path('products/<int:pk>/', ProductDetail.as_view(), name='product-retrieve'),
 ]
 
 if settings.DEBUG:
