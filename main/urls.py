@@ -21,17 +21,20 @@ from django.conf.urls.static import static
 from category.views import CategoryListCreateDetailView, CategoryDetailView
 from products.views import ProductListCreateRetrieveView, ProductDetail
 from authentication.views import MyTokenObtainPairView
+from cart.views import CartItemListCreateRetrieveView, CartItemDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),  # Include DJOSER URLs
     path('auth/', include('djoser.urls.authtoken')),
+    path("auth/jwt/create/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('api/', include('rest_framework.urls')),
     path('categories/', CategoryListCreateDetailView.as_view(), name='category-list-create'),
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-retrieve-update-delete'),
     path('products/', ProductListCreateRetrieveView.as_view(), name='product-list-create'),
     path('products/<int:pk>/', ProductDetail.as_view(), name='product-retrieve'),
-    path("auth/jwt/create/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path('cart/', CartItemListCreateRetrieveView.as_view(), name="cart-list-create"),
+    path('cart/<int:pk>/', CartItemDetail.as_view(), name="cart-detail"),
 ]
 
 if settings.DEBUG:
