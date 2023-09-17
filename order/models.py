@@ -16,7 +16,7 @@ class Order(models.Model):
     order_id = models.CharField(max_length=12)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
 
     def __str__(self) -> str:
         return self.user.email
