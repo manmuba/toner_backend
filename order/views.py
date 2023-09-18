@@ -3,8 +3,8 @@ from rest_framework import generics, pagination, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
-from .models import Order,OrderItem
-from .serializers import  OrderSerializer, OrderItemSerializer
+from .models import Order,OrderItem, OrderTrack
+from .serializers import  OrderSerializer, OrderItemSerializer, OrderTrackSerializer
 
 from django.utils.crypto import get_random_string
 # Create your views here.
@@ -41,3 +41,21 @@ class OrderItemsListCreateView(generics.ListCreateAPIView):
         except order.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return order_items
+    
+class OrderTrackListView(generics.ListAPIView):
+    serializer_class = OrderTrackSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        user = self.request.user
+        order = get_object_or_404(Order, pk=pk, user=user)
+        try:
+            order_track = OrderTrack.objects.filter(order=order)
+        except Order.DoesNotExist:
+            return OrderTrack.objects.none()
+        return order_track
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

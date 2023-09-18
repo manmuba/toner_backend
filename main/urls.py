@@ -23,7 +23,7 @@ from products.views import ProductListCreateRetrieveView, ProductDetail
 from authentication.views import MyTokenObtainPairView
 from cart.views import CartItemListCreateRetrieveView, CartItemDetail
 from wishlist.views import WishlistItemListCreateRetrieveView, WishlistItemDetail
-from order.views import OrderCreatListView, OrderItemsListCreateView
+from order.views import OrderCreatListView, OrderItemsListCreateView, OrderTrackListView
 from address.views import PersonalInfo, PersonalInfoDetail
 
 urlpatterns = [
@@ -44,6 +44,7 @@ urlpatterns = [
     path('orders/<int:pk>/', OrderItemsListCreateView.as_view(), name="order-items"),
     path('address/', PersonalInfo.as_view(), name="address-create-list"),
     path('address/<int:pk>/', PersonalInfoDetail.as_view(), name='address-retrieve'),
+    path('track/<int:pk>/', OrderTrackListView.as_view(), name='order-trck-list'),
 ]
 
 if settings.DEBUG:

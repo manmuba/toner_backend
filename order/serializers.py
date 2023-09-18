@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Order, OrderItem, OrderTrack
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,4 +10,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
     many = True
     class Meta:
         model = OrderItem
+        fields = '__all__'
+
+class OrderTrackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderTrack
         fields = '__all__'
