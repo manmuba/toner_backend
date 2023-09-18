@@ -28,3 +28,13 @@ class OrderItem(models.Model):
 
     def __str__(self) -> str:
         return self.order.user.email
+    
+class OrderTrack(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.PROTECT)
+    order_process = models.BooleanField(default=True)
+    order_shipped = models.BooleanField(default=False)
+    out_of_delivery = models.BooleanField(default=False)
+    delivered = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.order.order_id
