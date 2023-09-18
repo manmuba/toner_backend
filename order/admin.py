@@ -19,9 +19,9 @@ class OrderAdmin(admin.ModelAdmin):
     display_user_emails.short_description = 'User Emails'
 
 class OrderTrackAdmin(admin.ModelAdmin):
-    list_display = ('display_order_id', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
-    search_fields = ( 'order__order_id', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
-    list_filter = ('order__order_id', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
+    list_display = ('display_order_id', 'display_user_emails', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
+    search_fields = ( 'order__order_id', 'order__user__email', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
+    list_filter = ('order__order_id', 'order__user__email', 'order_process', 'order_shipped', 'out_of_delivery', 'delivered')
     list_per_page = 10
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'80'})},
@@ -29,7 +29,12 @@ class OrderTrackAdmin(admin.ModelAdmin):
     }
 
     def display_order_id(self, obj):
-        return obj.order.order_id
+        return obj.order.order_id\
+        
+    def display_user_emails(self, obj):
+        return obj.order.user.email
+
+    display_user_emails.short_description = 'User Emails'
 
     display_order_id.short_description = 'Order ID'
 
