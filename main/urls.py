@@ -24,6 +24,7 @@ from authentication.views import MyTokenObtainPairView
 from cart.views import CartItemListCreateRetrieveView, CartItemDetail
 from wishlist.views import WishlistItemListCreateRetrieveView, WishlistItemDetail
 from order.views import OrderCreatListView, OrderItemsListCreateView
+from address.views import PersonalInfo, PersonalInfoDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +42,8 @@ urlpatterns = [
     path('wishlist/<int:pk>/', WishlistItemDetail.as_view(), name="wishlist-detail"),
     path('orders/', OrderCreatListView.as_view(), name="order-create-list"),
     path('orders/<int:pk>/', OrderItemsListCreateView.as_view(), name="order-items"),
+    path('address/', PersonalInfo.as_view(), name="address-create-list"),
+    path('address/<int:pk>/', PersonalInfoDetail.as_view(), name='address-retrieve'),
 ]
 
 if settings.DEBUG:
